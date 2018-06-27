@@ -6,3 +6,4 @@ Description: The file serves as an entrypoint to the helpers module
 Date: 27/06/2018
 Author: Saurabh Badhwar
 """
+from .graphite import Graphite
