@@ -30,3 +30,4 @@ build
 
 #Hidden
 instance/config.py
+*.db
