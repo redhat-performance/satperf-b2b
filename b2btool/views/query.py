@@ -31,13 +31,25 @@ class NewQuery(View):
         query_string = query_data['query']
 
         # Build a model out of the data we got
-        q = Query(name=query_name, query_text=query_string)
-        db.session.add(q)
-        db.session.commit()
+        self.create_new_query(query_name, query_string)
 
         # We are done, time to exit
         response["status"] = "Success"
         return jsonify(response), 200
+
+    def create_new_query(self, name, query_text):
+        """Create a new custom query in the database.
+
+        Keyword arguments:
+        name -- The name to refer to the custom query
+        query_text -- The custom query to be done
+        """
+
+        q = Query(name=name, query_text=query_text)
+        db.session.add(q)
+        db.session.commit()
+        
+
 
 class GetQuery(View):
     """GetQuery view returns the custom queries applicable to a given hostname.
@@ -51,5 +63,60 @@ class GetQuery(View):
     def dispatch_request(self):
         """Request dispatcher."""
 
-        raise NotImplementedError("The method is not yet implemented.")
+        hostname = request.args.get("hostname")
+        print(hostname)
 
+
+class GenericQuery(View):
+    """GenericQuery view provides methods to manipulate a particular query.
+
+    The GenericQuery view is responsible for providing a common endpoint for
+    managing the individual custom queries, providing operations like, view,
+    update and delete.
+    """
+
+    methods = ["GET", "POST", "DELETE"]
+
+    def get(self):
+        """Get request handler."""
+        response = {}
+        query_name = request.args.get("name")
+        query_obj = self.get_object(query_name)
+        if query_obj is not None:
+            response[query_obj.name] = query_obj.query_text
+        return jsonify(response), 200
+
+    def post(self):
+        """Post request handler."""
+        response = {}
+        request_data = request.get_json()
+        query_name = request_data['name']
+        query_string = request_data['query']
+        query_obj = self.get_object(query_name)
+        if query_obj is not None:
+            query_obj.query_text = query_string
+            db.session.commit()
+            return jsonify(response), 202
+        return jsonify(response), 304
+
+    def delete(self):
+        """Delete request handler."""
+        response = {}
+        query_name = request.args.get('name')
+        query_obj = self.get_object(query_name)
+        if query_obj is not None:
+            db.session.delete(query_obj)
+            db.session.commit()
+            return jsonify(response), 202
+        return jsonify(response), 304
+
+    def get_object(self, name):
+        """Retrieve a query object.
+
+        Keyword arguments:
+        name -- The name with which to retrieve the object
+
+        Returns:
+            sqlalchemy.BaseQuery
+        """
+        return Query.query.filter_by(name=name).first()
