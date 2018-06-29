@@ -7,6 +7,7 @@ Description: Implementes the helpers for dealing with graphite api
 Date: 27/06/2018
 Author: Saurabh Badhwar
 """
+from datetime import datetime
 import requests
 import json
 
@@ -82,6 +83,27 @@ class Graphite(object):
                 for tmp_metric in tmp_metrics:
                     metrics.append(tmp_metric)
         return metrics
+
+    def get_metric_data(self, metric, start_time, end_time):
+        """Retrieve the metric data from the server.
+
+        The method provides a mechanism for retrieving the metric data
+        from the server provided a lead node metric path.
+
+        Keyword arguments:
+        metric -- The leaf node metric path to retrieve the data for
+        start_time -- Python datetime format start time for metrics
+        end_time -- Python datetime format end time for metrics
+
+        Returns:
+            dict
+        """
+        start_time = start_time.strftime('%H:%M_%Y%m%d')
+        end_time = end_time.strftime('%H:%M_%Y%m%d')
+        self.query_url = "{}:{}/render?target={}&from={}&until={}&format=json".format(self.graphite_hostname, self.graphite_port,metric,start_time,end_time)
+        req = requests.get(self.query_url)
+        response_data = json.loads(req.text)
+        return response_data
 
     def __validate_group(self, group):
         """Validate the provided group.
