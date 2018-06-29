@@ -1,0 +1,67 @@
+{% extends "master.j2" %}
+{% block content %}
+<div class="compare-block-1 compare-block">
+    <form id="data-selector-1" class="data-selector" action="#">
+        <fieldset class="static-fieldset">
+            <legend>Build Tag</legend>
+            <select id="build-tag" name="build-tag">
+
+            </select>
+        </fieldset>
+        <fieldset class="static-fieldset">
+            <legend>Hostname</legend>
+            <select id="hostname" name="hostname">
+
+            </select>
+        </fieldset>
+        <fieldset class="static-fieldset">
+            <legend>Benchmark</legend>
+            <select id="benchmark" name="benchmark">
+
+            </select>
+        </fieldset>
+        <fieldset class="static-fieldset">
+            <legend>Metric Class</legend>
+            <select id="metric-class" name="metric-class">
+
+            </select>
+        </fieldset>
+        <fieldset class="static-fieldset">
+            <legend>Metric</legend>
+            <select id="metric" name="metric">
+
+            </select>
+        </fieldset>
+    </form>
+    <div id="compare-block-1-chart" class="compare-block-chart"></div>
+</div>
+<div class="compare-block-2 compare-block">
+    <form id="data-selector-2" class="data-selector" action="#">
+        <fieldset class="static-fieldset">
+            <legend>Build Tag</legend>
+            <select id="build-tag-1" name="build-tag-1">
+
+            </select>
+        </fieldset>
+        <fieldset class="static-fieldset">
+            <legend>Hostname</legend>
+            <select id="hostname-1" name="hostname-1">
+
+            </select>
+        </fieldset>
+        <fieldset class="static-fieldset">
+            <legend>Metric Class</legend>
+            <select id="metric-class-1" name="metric-class-1">
+
+            </select>
+        </fieldset>
+        <fieldset class="static-fieldset">
+            <legend>Metric</legend>
+            <select id="metric-1" name="metric-1">
+
+            </select>
+        </fieldset>
+    </form>
+    <div id="compare-block-2-chart" class="compare-block-chart"></div>
+</div>
+{% endblock %}
