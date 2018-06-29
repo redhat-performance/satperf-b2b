@@ -8,12 +8,15 @@ Author: Saurabh Badhwar
 """
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from b2btool.helpers import Graphite
 
 application = Flask(__name__, instance_relative_config=True)
 application.config.from_object('config')
 application.config.from_pyfile('config.py')
 
 db = SQLAlchemy(application)
+
+graphite = Graphite(application)
 
 @application.route("/ping", methods=['GET', 'POST'])
 def ping():
