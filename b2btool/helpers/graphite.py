@@ -19,18 +19,17 @@ class Graphite(object):
     graphite API.
     """
 
-    def __init__(self, hostname, port, group):
+    def __init__(self, app):
         """Graphite abstraction initializer.
 
         Keyword arguments:
-        hostname -- The hostname of the host on which graphite is running
-        port -- The port on which graphite can be accessed
-        group -- Inside which group the queries should be made
+        app -- The flask application object
         """
-        self.graphite_hostname = hostname
-        self.graphite_port = port
+        self.graphite_hostname = app.config.get('GRAPHITE_HOSTNAME')
+        self.graphite_port = app.config.get('GRAPHITE_PORT')
         self.query_url = "{}:{}".format(self.graphite_hostname, 
                                         self.graphite_port)
+        group = app.config.get('GRAPHITE_QUERY_GROUP')
         if self.__validate_group(group):
             self.lookup_group = group
         else:
