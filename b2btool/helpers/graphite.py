@@ -75,7 +75,7 @@ class Graphite(object):
         response_data = json.loads(req.text)
         metrics = []
         for metric in response_data:
-            if metric['lead'] == 1:
+            if metric['leaf'] == 1:
                 metrics.append(metric['id'])
             else:
                 tmp_metrics = self.get_measurable_metrics(metric['id'])
