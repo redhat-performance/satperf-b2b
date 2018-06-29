@@ -102,7 +102,8 @@ class Graphite(object):
         self.query_url = "{}:{}/render?target={}&from={}&until={}&format=json".format(self.graphite_hostname, self.graphite_port,metric,start_time,end_time)
         req = requests.get(self.query_url)
         response_data = json.loads(req.text)
-        return response_data
+        print(response_data)
+        return response_data[0]['datapoints']
 
     def __validate_group(self, group):
         """Validate the provided group.
