@@ -7,3 +7,4 @@ Author: Saurabh Badhwar
 """
 from .query import NewQuery
 from .build import NewBuild, BuildTags, BuildBenchmarks, BuildHosts, BuildMetrics, BuildLeafMetrics
+from .index import Index
