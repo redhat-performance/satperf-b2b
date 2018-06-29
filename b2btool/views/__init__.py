@@ -6,3 +6,4 @@ Date: 27/06/2018
 Author: Saurabh Badhwar
 """
 from .query import NewQuery
+from .build import NewBuild, BuildTags, BuildBenchmarks, BuildHosts, BuildMetrics, BuildLeafMetrics
