@@ -76,7 +76,7 @@ class BuildTags(View):
             sqlalchemy.BaseQuery
 
         """
-        return Build.query.all()
+        return db.session.query(Build.tag).distinct().all()
 
 
 class BuildBenchmarks(View):
